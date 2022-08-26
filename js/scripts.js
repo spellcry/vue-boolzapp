@@ -280,7 +280,11 @@ const app = new Vue({
             return contact.messages[contact.messages.length - 1].message;
         },
         selectContact(contact) {
-            this.contactSelected = contact;
+            if ( contact !== this.contactSelected ) {
+                this.contactSelected = contact;
+            } else {
+                this.contactSelected = undefined;
+            }
         },
         sendMessage() {
             if ( this.myMessage !== '' ) {
