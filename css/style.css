@@ -89,7 +89,7 @@ img {
 .my-profile {
     display: flex;
     align-items: center;
-    padding: var(--p1);
+    padding: var(--p1) 1rem var(--p1) var(--p1);
     background-color: #EAEAEA;
 }
 
