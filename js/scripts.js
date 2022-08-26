@@ -268,7 +268,7 @@ const app = new Vue({
         contactsSearched() {
             if ( this.contactsSearchString !== '' ) {
                 return this.contacts.filter((contact) => {
-                    return contact.name.toLowerCase().includes(this.contactsSearchString.toLowerCase());
+                    return contact.name.toLowerCase().includes(this.contactsSearchString.toLowerCase().trim());
                 });
             } else {
                 return this.contacts;
