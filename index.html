@@ -10,9 +10,79 @@
     <link rel="stylesheet" href="./css/style.css">
     <!-- VUE -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/01de7d5bf8.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <main id="app" class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col w-30 profile-contacts">
+                    <div class="my-profile">
+                        <img class="my-profile__img" :src="myProfile.avatar" :alt="myProfile.name">
+                        {{ myProfile.name }}
+                        <div class="my-profile__actions">
+                            <i class="fa-solid fa-circle-notch"></i>
+                            <i class="fa-solid fa-message"></i>
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </div>
+                    </div>
+                    <div class="notifications">
+                        <i class="fa-solid fa-bell-slash"></i>
+                        <div class="notifications__text">
+                            <p>Ricevi notifiche di nuovi messaggi</p>
+                            <a href="#">Attiva notifiche desktop</a>
+                        </div>
+                    </div>
+                    <div class="search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" class="search__text" placeholder="Cerca o inizia una nuova chat">
+                    </div>
+                    <div class="contacts">
+                        <ul class="contacts__list">
+                            <li @click="selectContact(contact)" v-for="contact in contacts"
+                                :class="['item', contactSelected === contact ? 'selected' : '']">
+                                <img class="item__img" :src="'./img/avatar'+contact.avatar+'.jpg'" :alt="contact.name">
+                                <div class="item__info">
+                                    {{ contact.name }}
+                                    <p class="item__last-message">{{ getLastMessage(contact) }}</p>
+                                </div>
+                                <div class="last-online">
+                                    {{ contact.lastOnline }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col w-60 contact-chat">
+                    <template v-if="contactSelected !== undefined">
+                        <div class="contact-chat__header">
+                            <img class="item__img" :src="'./img/avatar'+contactSelected.avatar+'.jpg'"
+                                :alt="contactSelected.name">
+                            <div class="item__info">
+                                {{ contactSelected.name }}
+                                <p class="last-online">{{ 'Ultimo accesso oggi alle '+contactSelected.lastOnline }}</p>
+                            </div>
+                            <div class="header__actions">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <i class="fa-solid fa-paperclip"></i>
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </div>
+                        </div>
+                        <div class="contact-chat__messages">
+
+                        </div>
+                        <div class="contact-chat__write-message">
+                            <i class="fa-regular fa-face-smile"></i>
+                            <input type="text" class="write-message__text" placeholder="Scrivi un messaggio">
+                            <i class="fa-solid fa-microphone"></i>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script type="text/javascript" src="./js/scripts.js"></script>
 </body>
