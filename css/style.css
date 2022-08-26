@@ -226,6 +226,7 @@ img {
     background: url(../img/mine.jpg);
     background-size: contain;
     font-size: 1rem;
+    overflow-y: auto;
 }
 
 .messages {
