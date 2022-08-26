@@ -117,6 +117,7 @@ img {
     border-radius: 50%;
     background-color: #F2FBFF;
     color: var(--light-blue);
+    font-size: 1.4rem;
 }
 
 /* ! Search */
