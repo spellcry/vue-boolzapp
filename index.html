@@ -75,8 +75,13 @@
                             <ul class="messages">
                                 <li v-for="message in contactSelected.messages"
                                     :class="[message.status === 'received' ? 'received' : 'sent', 'message']">
-                                    <p>{{ message.message
-                                        }}</p>
+                                    <p class="message__text">{{ message.message }}</p>
+                                    <i @click="toggleMessageOptions(message)" class="fa-solid fa-chevron-down"></i>
+                                    <div :class="['message__options', message.optionVisible ? 'visible' : '']">
+                                        <p class="option option__info">Message info</p>
+                                        <p @click="deleteMessage(message)" class="option option__delete">Delete message
+                                        </p>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

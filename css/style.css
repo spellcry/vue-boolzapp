@@ -12,6 +12,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    user-select: none;
 }
 
 .main-content i {
@@ -237,11 +238,23 @@ img {
 }
 
 .messages .message {
+    position: relative;
+    display: flex;
     min-width: 300px;
     padding: 1rem;
     margin-bottom: 10px;
     border-radius: 5px;
     font-size: 1rem;
+}
+
+.message__text {
+    margin-right: auto;
+}
+
+.message i {
+    margin-left: 1rem;
+    color: #B1B1B1;
+    cursor: pointer;
 }
 
 .contact-chat__messages .received {
@@ -252,6 +265,42 @@ img {
 .contact-chat__messages .sent {
     align-self: flex-end;
     background-color: #D5F9BA;
+}
+
+.message__options {
+    position: absolute;
+    top: 35px;
+    right: 16px;
+    display: none;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgb(0 0 0 / 60%);
+    cursor: pointer;
+    z-index: 999;
+}
+
+.message__options.visible {
+    display: block;
+}
+
+.message__options .option {
+    padding: 1.2rem;
+}
+
+.message__options .option__info {
+    border-bottom: 1px solid #B1B1B1;
+}
+
+/* .message__options .option__info {
+    padding: 1.5rem 1.5rem 0.75rem 1.5rem;
+}
+
+.message__options .option__delete {
+    padding: 0.75rem 1.5rem 1.5rem 1.5rem;
+} */
+
+.message__options .option:hover {
+    background-color: #E9EBEB;
 }
 
 /* ! Write Message */
