@@ -75,9 +75,9 @@
                         </div>
                         <div class="contact-chat__messages">
                             <ul class="messages">
-                                <li v-for="message in contactSelected.messages"
+                                <li @click="toggleMessageOptions(message)" v-for="message in contactSelected.messages"
                                     :class="[message.status === 'received' ? 'received' : 'sent', 'message']">
-                                    <p @click="toggleMessageOptions(message)" class="message__text">{{ message.message
+                                    <p class="message__text">{{ message.message
                                         }}</p>
                                     <i class="fa-solid fa-chevron-down"></i>
                                     <div :class="['message__options', message.optionVisible ? 'visible' : '']">
