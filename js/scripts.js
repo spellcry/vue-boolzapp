@@ -260,8 +260,20 @@ const app = new Vue({
         },
         contacts,
         contactSelected: undefined,
-        myMessage: '',
         lastContactSent: undefined,
+        myMessage: '',
+        contactsSearchString: '',
+    },
+    computed: {
+        contactsSearched() {
+            if ( this.contactsSearchString !== '' ) {
+                return this.contacts.filter((contact) => {
+                    return contact.name.toLowerCase().includes(this.contactsSearchString.toLowerCase());
+                });
+            } else {
+                return this.contacts;
+            }
+        },
     },
     methods: {
         getLastMessage(contact) {
