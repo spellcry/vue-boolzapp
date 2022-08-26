@@ -260,6 +260,8 @@ const app = new Vue({
         },
         contacts,
         contactSelected: undefined,
+        myMessage: '',
+        lastContactSent: undefined,
     },
     methods: {
         getLastMessage(contact) {
@@ -267,6 +269,26 @@ const app = new Vue({
         },
         selectContact(contact) {
             this.contactSelected = contact;
-        }
+        },
+        sendMessage() {
+            if ( this.myMessage !== '' ) {
+                const message = {
+                    date: '10/01/2020 15:30:55',
+                    message: `${this.myMessage}`,
+                    statys: 'sent',
+                };
+                this.contactSelected.messages.push(message);
+                this.myMessage = '';
+                this.lastContactSent = this.contactSelected;
+                setTimeout(() => {
+                    const message = {
+                        date: '10/01/2020 15:30:55',
+                        message: 'Ok!',
+                        status: 'received',
+                    };
+                    this.lastContactSent.messages.push(message);
+                }, 1000);
+            }
+        },
     }
 });

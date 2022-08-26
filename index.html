@@ -81,7 +81,8 @@
                         </div>
                         <div class="contact-chat__write-message">
                             <i class="fa-regular fa-face-smile"></i>
-                            <input type="text" class="write-message__text" placeholder="Scrivi un messaggio">
+                            <input @keyup.enter="sendMessage" type="text" v-model="myMessage"
+                                class="write-message__text" placeholder="Scrivi un messaggio">
                             <i class="fa-solid fa-microphone"></i>
                         </div>
                     </template>
