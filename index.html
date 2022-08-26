@@ -12,6 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/01de7d5bf8.js" crossorigin="anonymous"></script>
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 </head>
 
 <body>
@@ -75,12 +77,17 @@
                             <ul class="messages">
                                 <li v-for="message in contactSelected.messages"
                                     :class="[message.status === 'received' ? 'received' : 'sent', 'message']">
-                                    <p class="message__text">{{ message.message }}</p>
-                                    <i @click="toggleMessageOptions(message)" class="fa-solid fa-chevron-down"></i>
+                                    <p @click="toggleMessageOptions(message)" class="message__text">{{ message.message
+                                        }}</p>
+                                    <i class="fa-solid fa-chevron-down"></i>
                                     <div :class="['message__options', message.optionVisible ? 'visible' : '']">
-                                        <p class="option option__info">Message info</p>
+                                        <p @click="toggleMessageTime(message)" class="option option__info">Message info
+                                        </p>
                                         <p @click="deleteMessage(message)" class="option option__delete">Delete message
                                         </p>
+                                    </div>
+                                    <div :class="['message__time', contactSelected.showMessageTime ? 'visible' : '']">
+                                        {{ showTime(message) }}
                                     </div>
                                 </li>
                             </ul>

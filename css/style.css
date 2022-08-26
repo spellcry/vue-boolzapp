@@ -245,6 +245,7 @@ img {
     margin-bottom: 10px;
     border-radius: 5px;
     font-size: 1rem;
+    cursor: pointer;
 }
 
 .message__text {
@@ -254,7 +255,6 @@ img {
 .message i {
     margin-left: 1rem;
     color: #B1B1B1;
-    cursor: pointer;
 }
 
 .contact-chat__messages .received {
@@ -291,16 +291,21 @@ img {
     border-bottom: 1px solid #B1B1B1;
 }
 
-/* .message__options .option__info {
-    padding: 1.5rem 1.5rem 0.75rem 1.5rem;
-}
-
-.message__options .option__delete {
-    padding: 0.75rem 1.5rem 1.5rem 1.5rem;
-} */
-
 .message__options .option:hover {
     background-color: #E9EBEB;
+}
+
+.message__time {
+    display: none;
+    position: absolute;
+    bottom: 2px;
+    right: 10px;
+    font-size: 0.7rem;
+    color: #B1B1B1;
+}
+
+.message__time.visible {
+    display: block;
 }
 
 /* ! Write Message */

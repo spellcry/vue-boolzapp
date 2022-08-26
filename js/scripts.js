@@ -3,6 +3,7 @@ const contacts = [
         name: 'Michele',
         avatar: '_1',
         lastOnline: '12:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -28,6 +29,7 @@ const contacts = [
         name: 'Sofia',
         avatar: '_2',
         lastOnline: '13:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '20/03/2020 16:30:00',
@@ -53,6 +55,7 @@ const contacts = [
         name: 'Samuele',
         avatar: '_3',
         lastOnline: '14:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '28/03/2020 10:10:40',
@@ -78,6 +81,7 @@ const contacts = [
         name: 'Alessandro B.',
         avatar: '_4',
         lastOnline: '15:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -97,6 +101,7 @@ const contacts = [
         name: 'Alessandro L.',
         avatar: '_5',
         lastOnline: '16:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -116,6 +121,7 @@ const contacts = [
         name: 'Claudia',
         avatar: '_6',
         lastOnline: '17:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -141,6 +147,7 @@ const contacts = [
         name: 'Federico',
         avatar: '_7',
         lastOnline: '18:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -160,6 +167,7 @@ const contacts = [
         name: 'Davide',
         avatar: '_8',
         lastOnline: '19:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -185,6 +193,7 @@ const contacts = [
         name: 'Luca',
         avatar: '_1',
         lastOnline: '20:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -210,6 +219,7 @@ const contacts = [
         name: 'Enrico',
         avatar: '_3',
         lastOnline: '21:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -235,6 +245,7 @@ const contacts = [
         name: 'Alex',
         avatar: '_4',
         lastOnline: '22:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -260,6 +271,7 @@ const contacts = [
         name: 'Cristian',
         avatar: '_5',
         lastOnline: '23:00',
+        showMessageTime: false,
         messages: [
             {
                 date: '10/01/2020 15:30:55',
@@ -321,8 +333,9 @@ const app = new Vue({
         },
         sendMessage() {
             if ( this.myMessage !== '' ) {
+                const now = dayjs().format('DD/MM/YYYY HH:mm:ss');
                 const message = {
-                    date: '10/01/2020 15:30:55',
+                    date: now,
                     message: `${this.myMessage}`,
                     statys: 'sent',
                 };
@@ -330,8 +343,9 @@ const app = new Vue({
                 this.myMessage = '';
                 this.lastContactSent = this.contactSelected;
                 setTimeout(() => {
+                    const now = dayjs().format('DD/MM/YYYY HH:mm:ss');
                     const message = {
-                        date: '10/01/2020 15:30:55',
+                        date: now,
                         message: 'Ok!',
                         status: 'received',
                     };
@@ -339,7 +353,7 @@ const app = new Vue({
                 }, 1000);
             }
         },
-        toggleMessageOptions(message, index) {
+        toggleMessageOptions(message) {
             message.optionVisible = !message.optionVisible;
         },
         deleteMessage(message) {
@@ -347,5 +361,13 @@ const app = new Vue({
                 this.contactSelected.messages.splice(this.contactSelected.messages.indexOf(message));
             }
         },
+        toggleMessageTime(message) {
+            this.contactSelected.showMessageTime = !this.contactSelected.showMessageTime;
+            this.toggleMessageOptions(message);
+        },
+        showTime(message) {
+            const hoursMinutesSecondsArray = message.date.split(' ')[1].split(':');
+            return `${hoursMinutesSecondsArray[0]}:${hoursMinutesSecondsArray[1]}`;
+        }
     }
 });
