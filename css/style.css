@@ -30,7 +30,7 @@ img {
     align-self: center;
     flex-grow: 1;
     height: 90%;
-    padding-inline: var(--p1);
+    margin-inline: var(--p1);
     border-radius: 5px;
     overflow: hidden;
 }
@@ -222,9 +222,34 @@ img {
 /* ! Messages */
 .contact-chat__messages {
     flex-grow: 1;
+    padding: 2rem 4rem;
     background: url(../img/mine.jpg);
     background-size: contain;
     font-size: 1rem;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+}
+
+.messages .message {
+    min-width: 300px;
+    padding: 1rem;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contact-chat__messages .received {
+    align-self: flex-start;
+    background-color: #fff;
+}
+
+.contact-chat__messages .sent {
+    align-self: flex-end;
+    background-color: #D5F9BA;
 }
 
 /* ! Write Message */

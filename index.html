@@ -71,7 +71,13 @@
                             </div>
                         </div>
                         <div class="contact-chat__messages">
-
+                            <ul class="messages">
+                                <li v-for="message in contactSelected.messages"
+                                    :class="[message.status === 'received' ? 'received' : 'sent', 'message']">
+                                    <p>{{ message.message
+                                        }}</p>
+                                </li>
+                            </ul>
                         </div>
                         <div class="contact-chat__write-message">
                             <i class="fa-regular fa-face-smile"></i>
