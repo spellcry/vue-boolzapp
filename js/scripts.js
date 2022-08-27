@@ -391,6 +391,7 @@ const app = new Vue({
             }
         },
         toggleMessageOptions(message) {
+            console.log(message);
             message.optionVisible = !message.optionVisible;
         },
         deleteMessage(message) {
@@ -400,7 +401,7 @@ const app = new Vue({
         },
         toggleMessageTime(message) {
             this.contactSelected.showMessageTime = !this.contactSelected.showMessageTime;
-            this.toggleMessageOptions(message);
+            // this.toggleMessageOptions(message);
         },
         translatedDay(day) {
             switch (day) {
