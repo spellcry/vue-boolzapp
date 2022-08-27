@@ -38,14 +38,15 @@
                         </div>
                     </div>
                     <div class="search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" v-model="contactsSearchString" class="search__text"
-                            placeholder="Cerca o inizia una nuova chat">
+                        <i :class="['fa-solid', (contactsSearchStringIsVoid && !searchFocus) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
+                        <input @keyup.esc="removeFocus" @focus="toggleSearchFocus" @blur="toggleSearchFocus" ref="search__input" type="text" v-model="contactsSearchString" class="search__text" placeholder="Cerca o inizia una nuova chat">
                     </div>
                     <div class="contacts">
                         <ul class="contacts__list">
-                            <li @click="selectContact(contact)" v-for="contact in contactsSearched"
-                                :class="['item', contactSelected === contact ? 'selected' : '']">
+                            <li @click="selectContact(contact)"
+                                v-for="contact in contactsSearched"
+                                :class="['item', contactSelected === contact ? 'selected' : '']"
+                            >
                                 <img class="item__img" :src="'./img/avatar'+contact.avatar+'.jpg'" :alt="contact.name">
                                 <div class="item__info">
                                     {{ contact.name }}
@@ -75,8 +76,10 @@
                         </div>
                         <div class="contact-chat__messages">
                             <ul class="messages">
-                                <li @click="toggleMessageOptions(message)" v-for="message in contactSelected.messages"
-                                    :class="[message.status === 'received' ? 'received' : 'sent', 'message']">
+                                <li @click="toggleMessageOptions(message)" 
+                                    v-for="message in contactSelected.messages"
+                                    :class="[message.status === 'received' ? 'received' : 'sent', 'message']"
+                                >
                                     <p class="message__text">{{ message.message
                                         }}</p>
                                     <i class="fa-solid fa-chevron-down"></i>

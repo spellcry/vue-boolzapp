@@ -131,6 +131,17 @@ img {
 
 .search i {
     margin-inline: 1rem;
+    font-size: 1.2rem;
+    transition: transform 100ms linear;
+}
+
+.search .fa-magnifying-glass {
+    transform: rotate(0deg);
+}
+
+.search .fa-arrow-down {
+    color: green;
+    transform: rotate(90deg);
 }
 
 .search__text {

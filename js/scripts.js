@@ -308,8 +308,12 @@ const app = new Vue({
         lastContactSent: undefined,
         myMessage: '',
         contactsSearchString: '',
+        searchFocus: false,
     },
     computed: {
+        contactsSearchStringIsVoid() {
+            return !this.contactsSearchString == true;
+        },
         contactsSearched() {
             if ( this.contactsSearchString !== '' ) {
                 return this.contacts.filter((contact) => {
@@ -368,6 +372,13 @@ const app = new Vue({
         showTime(message) {
             const hoursMinutesSecondsArray = message.date.split(' ')[1].split(':');
             return `${hoursMinutesSecondsArray[0]}:${hoursMinutesSecondsArray[1]}`;
+        },
+        toggleSearchFocus() {
+            this.searchFocus = !this.searchFocus;
+        },
+        removeFocus() {
+            this.$refs.search__input.blur();
+            this.contactsSearchString = '';
         }
     }
 });
