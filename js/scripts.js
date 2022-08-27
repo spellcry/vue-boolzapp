@@ -315,13 +315,7 @@ const app = new Vue({
                 dateArray2 = date2.split('/');
                 date2 = dayjs(`${dateArray2[2]}/${dateArray2[1]}/${dateArray2[0]}`).set('hour', timeArray2[0]).set('minute', timeArray2[1]).set('second', timeArray2[2]);;
                 const diff = date1.diff(date2);
-                if ( diff > 0 )
-                    return -1;
-                else if ( diff < 0 )
-                    return 1;
-                else {
-                    return 0
-                }
+                return diff > 0 ? -1 : diff < 0 ? 1 : 0;
             });
         },
         contactsSearched() {
