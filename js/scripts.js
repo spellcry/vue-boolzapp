@@ -302,6 +302,28 @@ const app = new Vue({
         contactsSearchStringIsVoid() {
             return !this.contactsSearchString == true;
         },
+        dateTimeOrderedContacts() {
+            this.contacts.sort((contact1,contact2) => {
+                const lastMessage1 = this.getLastMessage(contact1);
+                const lastMessage2 = this.getLastMessage(contact2);
+                let [date1, time1] = lastMessage1.date.split(' ');
+                timeArray1 = time1.split(':');
+                dateArray1 = date1.split('/');
+                date1 = dayjs(`${dateArray1[2]}/${dateArray1[1]}/${dateArray1[0]}`).set('hour', timeArray1[0]).set('minute', timeArray1[1]).set('second', timeArray1[2]);
+                let [date2, time2] = lastMessage2.date.split(' ');
+                timeArray2 = time2.split(':');
+                dateArray2 = date2.split('/');
+                date2 = dayjs(`${dateArray2[2]}/${dateArray2[1]}/${dateArray2[0]}`).set('hour', timeArray2[0]).set('minute', timeArray2[1]).set('second', timeArray2[2]);;
+                const diff = date1.diff(date2);
+                if ( diff > 0 )
+                    return -1;
+                else if ( diff < 0 )
+                    return 1;
+                else {
+                    return 0
+                }
+            });
+        },
         contactsSearched() {
             if ( this.contactsSearchString !== '' ) {
                 return this.contacts.filter((contact) => {
@@ -359,6 +381,7 @@ const app = new Vue({
                 this.contactSelected.messages.push(message);
                 this.myMessage = '';
                 this.lastContactSent = this.contactSelected;
+                this.dateTimeOrderedContacts;
                 setTimeout(() => {
                     const now = dayjs().format('DD/MM/YYYY HH:mm:ss');
                     const message = {
@@ -367,6 +390,7 @@ const app = new Vue({
                         status: 'received',
                     };
                     this.lastContactSent.messages.push(message);
+                    this.dateTimeOrderedContacts;
                 }, 1000);
             }
         },
@@ -433,5 +457,8 @@ const app = new Vue({
             this.$refs.search__input.blur();
             this.contactsSearchString = '';
         }
+    },
+    mounted() {
+        this.dateTimeOrderedContacts;
     }
 });
