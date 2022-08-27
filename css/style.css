@@ -1,3 +1,7 @@
+/* #region Import */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+/* #endregion Import */
+
 /* #region Root */
 :root {
     --p1: 0.6rem;
@@ -13,6 +17,10 @@
     margin: 0;
     padding: 0;
     user-select: none;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
 }
 
 .main-content i {

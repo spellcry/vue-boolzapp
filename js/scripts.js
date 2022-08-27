@@ -370,7 +370,8 @@ const app = new Vue({
                 const message = {
                     date: now,
                     message: `${this.myMessage}`,
-                    statys: 'sent',
+                    status: 'sent',
+                    optionVisible: false,
                 };
                 this.contactSelected.messages.push(message);
                 this.myMessage = '';
@@ -382,6 +383,7 @@ const app = new Vue({
                         date: now,
                         message: 'Ok!',
                         status: 'received',
+                        optionVisible: false,
                     };
                     this.lastContactSent.messages.push(message);
                     this.dateTimeOrderedContacts;
