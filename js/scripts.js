@@ -1,8 +1,7 @@
 const contacts = [
     {
         name: 'Michele',
-        avatar: '_1',
-        lastOnline: '12:00',
+        avatar: '_1',        
         showMessageTime: false,
         messages: [
             {
@@ -27,8 +26,7 @@ const contacts = [
     },
     {
         name: 'Sofia',
-        avatar: '_2',
-        lastOnline: '13:00',
+        avatar: '_2',        
         showMessageTime: false,
         messages: [
             {
@@ -53,8 +51,7 @@ const contacts = [
     },
     {
         name: 'Samuele',
-        avatar: '_3',
-        lastOnline: '14:00',
+        avatar: '_3',        
         showMessageTime: false,
         messages: [
             {
@@ -79,8 +76,7 @@ const contacts = [
     },
     {
         name: 'Alessandro B.',
-        avatar: '_4',
-        lastOnline: '15:00',
+        avatar: '_4',        
         showMessageTime: false,
         messages: [
             {
@@ -99,8 +95,7 @@ const contacts = [
     },
     {
         name: 'Alessandro L.',
-        avatar: '_5',
-        lastOnline: '16:00',
+        avatar: '_5',        
         showMessageTime: false,
         messages: [
             {
@@ -119,8 +114,7 @@ const contacts = [
     },
     {
         name: 'Claudia',
-        avatar: '_6',
-        lastOnline: '17:00',
+        avatar: '_6',        
         showMessageTime: false,
         messages: [
             {
@@ -145,8 +139,7 @@ const contacts = [
     },
     {
         name: 'Federico',
-        avatar: '_7',
-        lastOnline: '18:00',
+        avatar: '_7',        
         showMessageTime: false,
         messages: [
             {
@@ -165,8 +158,7 @@ const contacts = [
     },
     {
         name: 'Davide',
-        avatar: '_8',
-        lastOnline: '19:00',
+        avatar: '_8',        
         showMessageTime: false,
         messages: [
             {
@@ -182,7 +174,7 @@ const contacts = [
                 optionVisible: false,
             },
             {
-                date: '10/01/2020 15:51:00',
+                date: '27/08/2022 15:30:00',
                 message: 'OK!!',
                 status: 'received',
                 optionVisible: false,
@@ -191,8 +183,7 @@ const contacts = [
     },
     {
         name: 'Luca',
-        avatar: '_1',
-        lastOnline: '20:00',
+        avatar: '_1',        
         showMessageTime: false,
         messages: [
             {
@@ -208,7 +199,7 @@ const contacts = [
                 optionVisible: false,
             },
             {
-                date: '10/01/2020 15:51:00',
+                date: '20/08/2022 15:51:00',
                 message: 'OK!!',
                 status: 'received',
                 optionVisible: false,
@@ -217,8 +208,7 @@ const contacts = [
     },
     {
         name: 'Enrico',
-        avatar: '_3',
-        lastOnline: '21:00',
+        avatar: '_3',        
         showMessageTime: false,
         messages: [
             {
@@ -234,7 +224,7 @@ const contacts = [
                 optionVisible: false,
             },
             {
-                date: '10/01/2020 15:51:00',
+                date: '21/08/2022 15:51:00',
                 message: 'OK!!',
                 status: 'received',
                 optionVisible: false,
@@ -243,8 +233,7 @@ const contacts = [
     },
     {
         name: 'Alex',
-        avatar: '_4',
-        lastOnline: '22:00',
+        avatar: '_4',        
         showMessageTime: false,
         messages: [
             {
@@ -260,7 +249,7 @@ const contacts = [
                 optionVisible: false,
             },
             {
-                date: '10/01/2020 15:51:00',
+                date: '26/08/2022 15:51:00',
                 message: 'OK!!',
                 status: 'received',
                 optionVisible: false,
@@ -269,8 +258,7 @@ const contacts = [
     },
     {
         name: 'Cristian',
-        avatar: '_5',
-        lastOnline: '23:00',
+        avatar: '_5',        
         showMessageTime: false,
         messages: [
             {
@@ -286,7 +274,7 @@ const contacts = [
                 optionVisible: false,
             },
             {
-                date: '10/01/2020 15:51:00',
+                date: '24/08/2022 15:51:00',
                 message: 'OK!!',
                 status: 'received',
                 optionVisible: false,
@@ -323,10 +311,35 @@ const app = new Vue({
                 return this.contacts;
             }
         },
+        lastOnlineTime() {
+            let [date, time] = this.getLastMessage(this.contactSelected).date.split(' ');
+            timeArray = time.split(':');
+            dateArray = date.split('/');
+            date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
+            const diff = date.diff(dayjs(), 'day');
+            if ( diff >= -6 ) {
+                if ( diff === -1 )
+                    return `ieri alle ${this.formatTimeFromArray(timeArray)}`;
+                else if ( diff === 0 ) {
+                    return `oggi alle ${this.formatTimeFromArray(timeArray)}`;
+                } else {
+                    let day = date.format('dddd');
+                    day = this.translatedDay(day);
+                    return `${day} alle ${this.formatTimeFromArray(timeArray)}`;
+                }
+            }
+            return `il ${this.formatDateFromArray(dateArray)} alle ${this.formatTimeFromArray(timeArray)}`;
+        },
     },
     methods: {
+        formatTimeFromArray(timeArray) {
+            return `${timeArray[0]}:${timeArray[1]}`;
+        },
+        formatDateFromArray(dateArray) {
+            return `${dateArray[0]}/${dateArray[1]}/${dateArray[2]}`;
+        },
         getLastMessage(contact) {
-            return contact.messages[contact.messages.length - 1].message;
+            return contact.messages[contact.messages.length - 1];
         },
         selectContact(contact) {
             if ( contact !== this.contactSelected ) {
@@ -369,9 +382,49 @@ const app = new Vue({
             this.contactSelected.showMessageTime = !this.contactSelected.showMessageTime;
             this.toggleMessageOptions(message);
         },
+        translatedDay(day) {
+            switch (day) {
+                case 'Monday':
+                    day = 'Lunedì';
+                    break;
+                case 'Thuesday':
+                    day = 'Martedì';
+                    break;
+                case 'Wednesday':
+                    day = 'Mercoledì';
+                    break;
+                case 'Thursday':
+                    day = 'Giovedì';
+                    break;
+                case 'Friday':
+                    day = 'Venerdì';
+                    break;
+                case 'Saturday':
+                    day = 'Sabato';
+                    break;
+                case 'Sunday':
+                    day = 'Domenica';
+                    break;
+            }
+            return day;
+        },
         showTime(message) {
-            const hoursMinutesSecondsArray = message.date.split(' ')[1].split(':');
-            return `${hoursMinutesSecondsArray[0]}:${hoursMinutesSecondsArray[1]}`;
+            let [date, time] = message.date.split(' ');
+            timeArray = time.split(':');
+            dateArray = date.split('/');        
+            date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
+            const diff = date.diff(dayjs(), 'day');
+            if ( diff >= -6 ) {
+                if ( diff === -1 )
+                    return `ieri`;
+                else if ( diff === 0 ) {
+                    return this.formatTimeFromArray(timeArray);
+                } else {
+                    let day = date.format('dddd');
+                    return this.translatedDay(day);
+                }
+            }
+            return this.formatDateFromArray(dateArray);
         },
         toggleSearchFocus() {
             this.searchFocus = !this.searchFocus;

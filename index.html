@@ -21,6 +21,7 @@
         <div class="container">
             <div class="row">
                 <div class="col w-30 profile-contacts">
+                    <!-- My Profile -->
                     <div class="my-profile">
                         <img class="my-profile__img" :src="myProfile.avatar" :alt="myProfile.name">
                         {{ myProfile.name }}
@@ -30,6 +31,7 @@
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </div>
                     </div>
+                    <!-- Notifications -->
                     <div class="notifications">
                         <i class="fa-solid fa-bell-slash"></i>
                         <div class="notifications__text">
@@ -37,10 +39,12 @@
                             <a href="#">Attiva notifiche desktop</a>
                         </div>
                     </div>
+                    <!-- Search -->
                     <div class="search">
                         <i :class="['fa-solid', (contactsSearchStringIsVoid && !searchFocus) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
                         <input @keyup.esc="removeFocus" @focus="toggleSearchFocus" @blur="toggleSearchFocus" ref="search__input" type="text" v-model="contactsSearchString" class="search__text" placeholder="Cerca o inizia una nuova chat">
                     </div>
+                    <!-- Contacts -->
                     <div class="contacts">
                         <ul class="contacts__list">
                             <li @click="selectContact(contact)"
@@ -50,7 +54,7 @@
                                 <img class="item__img" :src="'./img/avatar'+contact.avatar+'.jpg'" :alt="contact.name">
                                 <div class="item__info">
                                     {{ contact.name }}
-                                    <p class="item__last-message">{{ getLastMessage(contact) }}</p>
+                                    <p class="item__last-message">{{ getLastMessage(contact).message }}</p>
                                 </div>
                                 <div class="last-online">
                                     {{ showTime(contact.messages[contact.messages.length - 1]) }}
@@ -61,12 +65,13 @@
                 </div>
                 <div class="col w-60 contact-chat">
                     <template v-if="contactSelected !== undefined">
+                        <!-- Chat Header -->
                         <div class="contact-chat__header">
                             <img class="item__img" :src="'./img/avatar'+contactSelected.avatar+'.jpg'"
                                 :alt="contactSelected.name">
                             <div class="item__info">
                                 {{ contactSelected.name }}
-                                <p class="last-online">{{ 'Ultimo accesso oggi alle '+contactSelected.lastOnline }}</p>
+                                <p class="last-online">{{ 'Ultimo accesso ' + lastOnlineTime }}</p>
                             </div>
                             <div class="header__actions">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -74,6 +79,7 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </div>
                         </div>
+                        <!-- Chat Messages -->
                         <div class="contact-chat__messages">
                             <ul class="messages">
                                 <li @click="toggleMessageOptions(message)" 
@@ -95,6 +101,7 @@
                                 </li>
                             </ul>
                         </div>
+                        <!-- Chat Write Message -->
                         <div class="contact-chat__write-message">
                             <i class="fa-regular fa-face-smile"></i>
                             <input @keyup.enter="sendMessage" type="text" v-model="myMessage"
