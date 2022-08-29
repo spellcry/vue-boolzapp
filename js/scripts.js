@@ -297,6 +297,7 @@ const app = new Vue({
         myMessage: '',
         contactsSearchString: '',
         searchFocus: false,
+        lastMessagesDate: undefined,
     },
     computed: {
         contactsSearchStringIsVoid() {
@@ -401,7 +402,6 @@ const app = new Vue({
         },
         toggleMessageTime(message) {
             this.contactSelected.showMessageTime = !this.contactSelected.showMessageTime;
-            // this.toggleMessageOptions(message);
         },
         translatedDay(day) {
             switch (day) {
@@ -429,7 +429,7 @@ const app = new Vue({
             }
             return day;
         },
-        showTime(message) {
+        showDateTime(message) {
             let [date, time] = message.date.split(' ');
             timeArray = time.split(':');
             dateArray = date.split('/');        
@@ -446,6 +446,36 @@ const app = new Vue({
                 }
             }
             return this.formatDateFromArray(dateArray);
+        },
+        showDate(message) {
+            let [date, time] = message.date.split(' ');
+            timeArray = time.split(':');
+            dateArray = date.split('/');        
+            date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
+            const diff = date.diff(dayjs(), 'day');
+            if ( diff >= -6 ) {
+                if ( diff === -1 )
+                    date = `Ieri`.toUpperCase();
+                else if ( diff === 0 ) {
+                    date = 'Oggi'.toUpperCase();
+                } else {
+                    let day = date.format('dddd');
+                    date = this.translatedDay(day).toUpperCase();
+                }
+            } else {
+                date =  this.formatDateFromArray(dateArray);
+            }
+            if ( date !== this.lastMessagesDate ) {
+                this.lastMessagesDate = date;
+                return true;
+            } else {
+                return false;
+            }
+        },
+        showTime(message) {
+            let [date, time] = message.date.split(' ');
+            timeArray = time.split(':');
+            return this.formatTimeFromArray(timeArray);
         },
         toggleSearchFocus() {
             this.searchFocus = !this.searchFocus;

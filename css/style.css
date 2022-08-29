@@ -286,6 +286,15 @@ img {
     background-color: #D5F9BA;
 }
 
+.contact-chat__messages .date {
+    align-self: center;
+    min-width: auto;
+    padding: 0.5rem 1rem;
+    margin-block: 20px 20px;
+    background-color: #fff;
+    font-size: 0.8rem;
+}
+
 .message__options {
     position: absolute;
     top: 35px;

@@ -57,7 +57,7 @@
                                     <p class="item__last-message">{{ getLastMessage(contact).message }}</p>
                                 </div>
                                 <div class="last-online">
-                                    {{ showTime(contact.messages[contact.messages.length - 1]) }}
+                                    {{ showDateTime(contact.messages[contact.messages.length - 1]) }}
                                 </div>
                             </li>
                         </ul>
@@ -82,23 +82,27 @@
                         <!-- Chat Messages -->
                         <div class="contact-chat__messages">
                             <ul class="messages">
-                                <li @click="toggleMessageOptions(message)" 
-                                    v-for="message in contactSelected.messages"
-                                    :class="[message.status === 'received' ? 'received' : 'sent', 'message']"
-                                >
-                                    <p class="message__text">{{ message.message
-                                        }}</p>
-                                    <i class="fa-solid fa-chevron-down"></i>
-                                    <div :class="['message__options', message.optionVisible ? 'visible' : '']">
-                                        <p @click="toggleMessageTime(message)" class="option option__info">Message info
-                                        </p>
-                                        <p @click="deleteMessage(message)" class="option option__delete">Delete message
-                                        </p>
-                                    </div>
-                                    <div :class="['message__time', contactSelected.showMessageTime ? 'visible' : '']">
-                                        {{ showTime(message) }}
-                                    </div>
-                                </li>
+                                <template v-for="message in contactSelected.messages">
+                                    <li v-if="showDate(message)" class="message date">
+                                        {{ lastMessagesDate }}
+                                    </li>                                
+                                    <li @click="toggleMessageOptions(message)" 
+                                        :class="[message.status === 'received' ? 'received' : 'sent', 'message']"
+                                    >
+                                        <p class="message__text">{{ message.message
+                                            }}</p>
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                        <div :class="['message__options', message.optionVisible ? 'visible' : '']">
+                                            <p @click="toggleMessageTime(message)" class="option option__info">Message info
+                                            </p>
+                                            <p @click="deleteMessage(message)" class="option option__delete">Delete message
+                                            </p>
+                                        </div>
+                                        <div :class="['message__time', contactSelected.showMessageTime ? 'visible' : '']">
+                                            {{ showTime(message) }}
+                                        </div>
+                                    </li>
+                                </template>
                             </ul>
                         </div>
                         <!-- Chat Write Message -->
