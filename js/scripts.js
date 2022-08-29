@@ -361,6 +361,7 @@ const app = new Vue({
         selectContact(contact) {
             if ( contact !== this.contactSelected ) {
                 this.contactSelected = contact;
+                this.checkMessagesDate(contact.messages);
             } else {
                 this.contactSelected = undefined;
             }
@@ -378,6 +379,7 @@ const app = new Vue({
                 this.myMessage = '';
                 this.lastContactSent = this.contactSelected;
                 this.dateTimeOrderedContacts;
+                this.checkMessagesDate(this.lastContactSent.messages);
                 setTimeout(() => {
                     const now = dayjs().format('DD/MM/YYYY HH:mm:ss');
                     const message = {
@@ -388,11 +390,11 @@ const app = new Vue({
                     };
                     this.lastContactSent.messages.push(message);
                     this.dateTimeOrderedContacts;
+                    this.checkMessagesDate(this.lastContactSent.messages);
                 }, 1000);
             }
         },
         toggleMessageOptions(message) {
-            console.log(message);
             message.optionVisible = !message.optionVisible;
         },
         deleteMessage(message) {
@@ -431,8 +433,8 @@ const app = new Vue({
         },
         showDateTime(message) {
             let [date, time] = message.date.split(' ');
-            timeArray = time.split(':');
-            dateArray = date.split('/');        
+            const timeArray = time.split(':');
+            const dateArray = date.split('/');        
             date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
             const diff = date.diff(dayjs(), 'day');
             if ( diff >= -6 ) {
@@ -448,11 +450,19 @@ const app = new Vue({
             return this.formatDateFromArray(dateArray);
         },
         showDate(message) {
-            let [date, time] = message.date.split(' ');
-            timeArray = time.split(':');
-            dateArray = date.split('/');        
+            let date = message.date.split(' ')[0];
+            const dateArray = date.split('/');        
             date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
             const diff = date.diff(dayjs(), 'day');
+            date = this.checkDateDiff(diff, date, dateArray);
+            return date;
+        },
+        showTime(message) {
+            let time = message.date.split(' ')[1];
+            const timeArray = time.split(':');
+            return this.formatTimeFromArray(timeArray);
+        },
+        checkDateDiff(diff, date, dateArray) {
             if ( diff >= -6 ) {
                 if ( diff === -1 )
                     date = `Ieri`.toUpperCase();
@@ -465,17 +475,23 @@ const app = new Vue({
             } else {
                 date =  this.formatDateFromArray(dateArray);
             }
-            if ( date !== this.lastMessagesDate ) {
-                this.lastMessagesDate = date;
-                return true;
-            } else {
-                return false;
-            }
+            return date;
         },
-        showTime(message) {
-            let [date, time] = message.date.split(' ');
-            timeArray = time.split(':');
-            return this.formatTimeFromArray(timeArray);
+        checkMessagesDate(messages) {
+            this.lastMessagesDate = undefined;
+            messages.forEach(message => {
+                let date = message.date.split(' ')[0];
+                const dateArray = date.split('/');        
+                date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
+                const diff = date.diff(dayjs(), 'day');
+                date = this.checkDateDiff(diff, date, dateArray);
+                if ( date !== this.lastMessagesDate ) {
+                    this.lastMessagesDate = date;
+                    message.visualizeDate = true;
+                } else {
+                    message.visualizeDate = false;
+                }
+            });
         },
         toggleSearchFocus() {
             this.searchFocus = !this.searchFocus;

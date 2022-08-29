@@ -83,14 +83,13 @@
                         <div class="contact-chat__messages">
                             <ul class="messages">
                                 <template v-for="message in contactSelected.messages">
-                                    <li v-if="showDate(message)" class="message date">
-                                        {{ lastMessagesDate }}
+                                    <li v-if="message.visualizeDate" class="message date">
+                                        {{ showDate(message) }}
                                     </li>                                
                                     <li @click="toggleMessageOptions(message)" 
                                         :class="[message.status === 'received' ? 'received' : 'sent', 'message']"
                                     >
-                                        <p class="message__text">{{ message.message
-                                            }}</p>
+                                        <p class="message__text">{{ message.message }}</p>
                                         <i class="fa-solid fa-chevron-down"></i>
                                         <div :class="['message__options', message.optionVisible ? 'visible' : '']">
                                             <p @click="toggleMessageTime(message)" class="option option__info">Message info
