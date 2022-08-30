@@ -5,18 +5,21 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Hai portato a spasso il cane?',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'Ricordati di stendere i panni',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 3,
                 date: '10/01/2020 16:15:22',
                 message: 'Tutto fatto!',
                 status: 'received',
@@ -30,18 +33,21 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '20/03/2020 16:30:00',
                 message: 'Ciao come stai?',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '20/03/2020 16:30:55',
                 message: 'Bene grazie! Stasera ci vediamo?',
                 status: 'received',
                 optionVisible: false,
             },
             {
+                id: 3,
                 date: '20/03/2020 16:35:00',
                 message: 'Mi piacerebbe ma devo andare a fare la spesa.',
                 status: 'sent',
@@ -55,18 +61,21 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '28/03/2020 10:10:40',
                 message: 'La Marianna va in campagna',
                 status: 'received',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '28/03/2020 10:20:10',
                 message: 'Sicuro di non aver sbagliato chat?',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 3,
                 date: '28/03/2020 16:15:22',
                 message: 'Ah scusa!',
                 status: 'received',
@@ -80,12 +89,14 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Lo sai che ha aperto una nuova pizzeria?',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'Si, ma preferirei andare al cinema',
                 status: 'received',
@@ -99,12 +110,14 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Ricordati di chiamare la nonna',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'Va bene, stasera la sento',
                 status: 'received',
@@ -118,18 +131,21 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Ciao Claudia, hai novità?',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'Non ancora',
                 status: 'received',
                 optionVisible: false,
             },
             {
+                id: 3,
                 date: '10/01/2020 15:51:00',
                 message: 'Nessuna nuova, buona nuova',
                 status: 'sent',
@@ -143,12 +159,14 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Fai gli auguri a Martina che è il suo compleanno!',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'Grazie per avermelo ricordato, le scrivo subito!',
                 status: 'received',
@@ -162,18 +180,21 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Ciao, andiamo a mangiare la pizza stasera?',
                 status: 'received',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'No, l\'ho già mangiata ieri, ordiniamo sushi!',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 3,
                 date: '27/08/2022 15:30:00',
                 message: 'OK!!',
                 status: 'received',
@@ -187,18 +208,21 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Ciao, andiamo a mangiare la pizza stasera?',
                 status: 'received',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'No, l\'ho già mangiata ieri, ordiniamo sushi!',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 3,
                 date: '20/08/2022 15:51:00',
                 message: 'OK!!',
                 status: 'received',
@@ -212,18 +236,21 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Ciao, andiamo a mangiare la pizza stasera?',
                 status: 'received',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'No, l\'ho già mangiata ieri, ordiniamo sushi!',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 3,
                 date: '21/08/2022 15:51:00',
                 message: 'OK!!',
                 status: 'received',
@@ -237,18 +264,21 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Ciao, andiamo a mangiare la pizza stasera?',
                 status: 'received',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'No, l\'ho già mangiata ieri, ordiniamo sushi!',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 3,
                 date: '26/08/2022 15:51:00',
                 message: 'OK!!',
                 status: 'received',
@@ -262,18 +292,21 @@ const contacts = [
         showMessageTime: false,
         messages: [
             {
+                id: 1,
                 date: '10/01/2020 15:30:55',
                 message: 'Ciao, andiamo a mangiare la pizza stasera?',
                 status: 'received',
                 optionVisible: false,
             },
             {
+                id: 2,
                 date: '10/01/2020 15:50:00',
                 message: 'No, l\'ho già mangiata ieri, ordiniamo sushi!',
                 status: 'sent',
                 optionVisible: false,
             },
             {
+                id: 3,
                 date: '24/08/2022 15:51:00',
                 message: 'OK!!',
                 status: 'received',
@@ -381,6 +414,9 @@ const app = new Vue({
                 this.contactSelected = undefined;
             }
         },
+        getMessageId(message) {
+            return message.id;
+        },
         cleanMessage() {
             this.myMessage = this.myMessage.trim();
         },
@@ -388,7 +424,9 @@ const app = new Vue({
             this.cleanMessage();
             if ( this.myMessage !== '' ) {
                 const now = dayjs().format('DD/MM/YYYY HH:mm:ss');
+                const id = this.contactSelected.messages.length + 1;
                 const message = {
+                    id: id,
                     date: now,
                     message: `${this.myMessage}`,
                     status: 'sent',
@@ -402,6 +440,7 @@ const app = new Vue({
                 setTimeout(() => {
                     const now = dayjs().format('DD/MM/YYYY HH:mm:ss');
                     const message = {
+                        id: id + 1,
                         date: now,
                         message: 'Ok!',
                         status: 'received',
@@ -535,5 +574,11 @@ const app = new Vue({
     },
     mounted() {
         this.dateTimeOrderedContacts;
-    }
+    },
+    updated() {
+        const chat = document.querySelector('.contact-chat__messages');
+        if ( chat != null ) {
+            chat.scrollTop = chat.scrollHeight;
+        }
+    },
 });

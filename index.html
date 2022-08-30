@@ -90,6 +90,7 @@
                                             {{ showDate(message) }}
                                         </li>                                
                                         <li @click="toggleMessageOptions(message)" 
+                                            :id="getMessageId(message)"
                                             :class="[message.status === 'received' ? 'received' : 'sent', 'message']"
                                         >
                                             <p class="message__text">{{ message.message }}</p>
@@ -133,12 +134,14 @@
                         <!-- Messages -->
                         <ul class="search__messages messages">
                             <li v-for="message in messagesSearched" class="messages__message message">
-                                <p class="message__date">
-                                    {{ showDateTime(message) }}
-                                </p>
-                                <p class="message__text">
-                                    {{ message.message }}
-                                </p>
+                                <a :href="'#' + getMessageId(message)">
+                                    <p class="message__date">
+                                        {{ showDateTime(message) }}
+                                    </p>
+                                    <p class="message__text">
+                                        {{ message.message }}
+                                    </p>
+                                </a>
                             </li>
                         </ul>
                     </div>
