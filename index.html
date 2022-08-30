@@ -42,7 +42,7 @@
                     <!-- Search -->
                     <div class="search">
                         <div class="search__inner">
-                            <i :class="['fa-solid', (contactsSearchStringIsVoid && !searchFocus) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
+                            <i @click="setFocus" :class="['fa-solid', (contactsSearchStringIsVoid && !searchFocus) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
                             <input @keyup.esc="removeFocus" @focus="toggleSearchFocus" @blur="toggleSearchFocus" ref="search__input" type="text" v-model="contactsSearchString" class="search__text" placeholder="Cerca o inizia una nuova chat">
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                         <!-- Search -->
                         <div class="search">
                             <div class="search__inner">
-                                <i :class="['fa-solid', (messagesSearchStringIsVoid && !searchFocusMessages) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
+                                <i @click="setFocusMessages" :class="['fa-solid', (messagesSearchStringIsVoid && !searchFocusMessages) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
                                 <input @keyup.esc="removeFocusMessages" @focus="toggleSearchFocusMessages" @blur="toggleSearchFocusMessages" ref="search__input__messages" type="text" v-model="messagesSearchString" class="search__text" placeholder="Cerca...">
                             </div>
                         </div>

@@ -561,6 +561,12 @@ const app = new Vue({
         toggleSearchFocusMessages() {
             this.searchFocusMessages = !this.searchFocusMessages;
         },
+        setFocus() {
+            this.$refs.search__input.focus();
+        },
+        setFocusMessages() {
+            this.$refs.search__input__messages.focus();
+        },
         removeFocusMessages() {
             this.$refs.search__input__messages.blur();
             this.messagesSearchString = '';
@@ -570,7 +576,7 @@ const app = new Vue({
         },
         hideSearchMessages() {
             this.showedSearchMessages = false;
-        }
+        },
     },
     mounted() {
         this.dateTimeOrderedContacts;
