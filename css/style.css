@@ -412,4 +412,8 @@ ul {
     color: #888;
 }
 
+.search__messages .message:hover {
+    background-color: #EAEAEA;
+}
+
 /* #endregion Contact Chat */
