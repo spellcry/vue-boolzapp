@@ -551,45 +551,58 @@ const app = new Vue({
                 }
             });
         },
-        onSearchFocus() {
-            this.searchFocus = true;
-        },
-        onSearchBlur() {
-            setTimeout(() => {
-                this.searchFocus = false;                
-            }, 150);
-        },
-        removeFocus() {
-            this.$refs.search__input.blur();
-            this.contactsSearchString = '';
-        },
-        onSearchFocusMessages() {
-            this.searchFocusMessages = true;
-        },
-        onSearchBlurMessages() {
-            setTimeout(() => {
-                this.searchFocusMessages = false;
-            }, 150);
-        },
-        setFocus() {
-            const searchInput = this.$refs.search__input;
-            if ( !this.searchFocus ) {
-                searchInput.focus();
-            } else if ( !this.contactsSearchStringIsVoid ) {
-                this.contactsSearchString = '';
+        onSearchFocus(type) {
+            switch (type) {
+                case 'contacts':
+                    this.searchFocus = true;
+                    break;
+                case 'messages':
+                    this.searchFocusMessages = true;
             }
         },
-        setFocusMessages() {
-            const searchInput = this.$refs.search__input__messages;
-            if ( !this.searchFocusMessages ) {
-                searchInput.focus();
-            } else if ( !this.messagesSearchStringIsVoid ) {
-                this.messagesSearchString = '';
-            }
+        onSearchBlur(type) {
+            setTimeout(() => {
+                switch (type) {
+                    case 'contacts':
+                        this.searchFocus = false;
+                        break;
+                    case 'messages':
+                        this.searchFocusMessages = false;
+                }
+            }, 150);
         },
-        removeFocusMessages() {
-            this.$refs.search__input__messages.blur();
-            this.messagesSearchString = '';
+        removeFocus(type) {
+            switch (type) {
+                case 'contacts':
+                    this.$refs.search__input.blur();
+                    this.contactsSearchString = '';
+                    break;
+                case 'messages':
+                    this.$refs.search__input__messages.blur();
+                    this.messagesSearchString = '';
+                    break;
+            }
+        },        
+        setFocus(type) {
+            let searchInput;
+            switch (type) {
+                case 'contacts':
+                    searchInput = this.$refs.search__input;
+                    if ( !this.searchFocus ) {
+                        searchInput.focus();
+                    } else if ( !this.contactsSearchStringIsVoid ) {
+                        this.contactsSearchString = '';
+                    }                    
+                    break;
+                case 'messages':
+                    searchInput = this.$refs.search__input__messages;
+                    if ( !this.searchFocusMessages ) {
+                        searchInput.focus();
+                    } else if ( !this.messagesSearchStringIsVoid ) {
+                        this.messagesSearchString = '';
+                    }                    
+                    break;
+            }
         },
         showSearchMessages() {
             this.showedSearchMessages = true;

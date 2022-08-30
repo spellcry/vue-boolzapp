@@ -42,8 +42,8 @@
                     <!-- Search -->
                     <div class="search">
                         <div class="search__inner">
-                            <i @click="setFocus" ref="search__icon" :class="['fa-solid', (contactsSearchStringIsVoid && !searchFocus) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
-                            <input @keyup.esc="removeFocus" @focus="onSearchFocus" @blur="onSearchBlur" ref="search__input" type="text" v-model="contactsSearchString" class="search__text" placeholder="Cerca o inizia una nuova chat">
+                            <i @click="setFocus('contacts')" ref="search__icon" :class="['fa-solid', (contactsSearchStringIsVoid && !searchFocus) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
+                            <input @keyup.esc="removeFocus('contacts')" @focus="onSearchFocus('contacts')" @blur="onSearchBlur('contacts')" ref="search__input" type="text" v-model="contactsSearchString" class="search__text" placeholder="Cerca o inizia una nuova chat">
                         </div>
                     </div>
                     <!-- Contacts -->
@@ -127,8 +127,8 @@
                         <!-- Search -->
                         <div class="search">
                             <div class="search__inner">
-                                <i @click="setFocusMessages" :class="['fa-solid', (messagesSearchStringIsVoid && !searchFocusMessages) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
-                                <input @keyup.esc="removeFocusMessages" @focus="onSearchFocusMessages" @blur="onSearchBlurMessages" ref="search__input__messages" type="text" v-model="messagesSearchString" class="search__text" placeholder="Cerca...">
+                                <i @click="setFocus('messages')" :class="['fa-solid', (messagesSearchStringIsVoid && !searchFocusMessages) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
+                                <input @keyup.esc="removeFocus('messages')" @focus="onSearchFocus('messages')" @blur="onSearchBlur('messages')" ref="search__input__messages" type="text" v-model="messagesSearchString" class="search__text" placeholder="Cerca...">
                             </div>
                         </div>
                         <!-- Messages -->
