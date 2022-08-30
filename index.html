@@ -56,7 +56,7 @@
                                 <img class="item__img" :src="'./img/avatar'+contact.avatar+'.jpg'" :alt="contact.name">
                                 <div class="item__info">
                                     {{ contact.name }}
-                                    <p class="item__last-message">{{ getLastMessage(contact).message }}</p>
+                                    <p class="item__last-message">{{ cutMessageText(getLastMessage(contact)) }}</p>
                                 </div>
                                 <div class="last-online">
                                     {{ showDateTime(contact.messages[contact.messages.length - 1]) }}

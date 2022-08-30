@@ -406,6 +406,12 @@ const app = new Vue({
         getLastMessage(contact) {
             return contact.messages[contact.messages.length - 1];
         },
+        cutMessageText(message) {
+            if ( message.message.length > 45 ) {
+                return message.message.substring(0, 42)+'...';
+            }
+            return message.message;
+        },
         selectContact(contact) {
             if ( contact !== this.contactSelected ) {
                 this.contactSelected = contact;
