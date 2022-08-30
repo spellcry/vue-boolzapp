@@ -296,12 +296,18 @@ const app = new Vue({
         lastContactSent: undefined,
         myMessage: '',
         contactsSearchString: '',
+        messagesSearchString: '',
         searchFocus: false,
+        searchFocusMessages: false,
         lastMessagesDate: undefined,
+        showedSearchMessages: false,
     },
     computed: {
         contactsSearchStringIsVoid() {
             return !this.contactsSearchString == true;
+        },
+        messagesSearchStringIsVoid() {
+            return !this.messagesSearchString == true;
         },
         dateTimeOrderedContacts() {
             this.contacts.sort((contact1,contact2) => {
@@ -326,6 +332,15 @@ const app = new Vue({
                 });
             } else {
                 return this.contacts;
+            }
+        },
+        messagesSearched() {
+            if ( this.messagesSearchString !== '' ) {
+                return this.contactSelected.messages.filter((message) => {
+                    return message.message.toLowerCase().includes(this.messagesSearchString.toLowerCase().trim());
+                });
+            } else {
+                return '';
             }
         },
         lastOnlineTime() {
@@ -366,7 +381,11 @@ const app = new Vue({
                 this.contactSelected = undefined;
             }
         },
+        cleanMessage() {
+            this.myMessage = this.myMessage.trim();
+        },
         sendMessage() {
+            this.cleanMessage();
             if ( this.myMessage !== '' ) {
                 const now = dayjs().format('DD/MM/YYYY HH:mm:ss');
                 const message = {
@@ -499,6 +518,19 @@ const app = new Vue({
         removeFocus() {
             this.$refs.search__input.blur();
             this.contactsSearchString = '';
+        },
+        toggleSearchFocusMessages() {
+            this.searchFocusMessages = !this.searchFocusMessages;
+        },
+        removeFocusMessages() {
+            this.$refs.search__input__messages.blur();
+            this.messagesSearchString = '';
+        },
+        showSearchMessages() {
+            this.showedSearchMessages = true;
+        },
+        hideSearchMessages() {
+            this.showedSearchMessages = false;
         }
     },
     mounted() {

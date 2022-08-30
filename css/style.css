@@ -31,6 +31,10 @@ img {
     display: block;
 }
 
+ul {
+    list-style-type: none;
+}
+
 /* #endregion Regole Reset */
 
 /* #region Utilities */
@@ -132,6 +136,11 @@ img {
 
 /* ! Search */
 .search {
+    padding: var(--p1);
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.search__inner {
     display: flex;
     align-items: center;
     padding: var(--p1);
@@ -156,6 +165,7 @@ img {
 .search__text {
     border: none;
     flex-grow: 1;
+    background-color: #f7f7f7;
 }
 
 .search .search__text:focus-visible {
@@ -169,7 +179,6 @@ img {
 }
 
 .contacts__list {
-    list-style-type: none;
     overflow-y: auto;
 }
 
@@ -215,8 +224,13 @@ img {
 /* #region Contact Chat */
 .contact-chat {
     display: flex;
-    flex-direction: column;
     background-color: #fff;
+}
+
+.contact-chat-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .contact-chat i {
@@ -362,6 +376,36 @@ img {
     margin-inline: var(--p1);
     border: none;
     font-size: 1rem;
+}
+
+/* ! Search Contact Messages */
+.search-contact-messages {
+    display: none;
+    flex-basis: 40%;
+}
+
+.search-contact-messages.visualize {
+    display: block;
+}
+
+.search-contact-messages__header {
+    display: flex;
+    align-items: center;
+    padding: 22.6px;
+    background-color: #EAEAEA;
+    border-left: 1px solid #B1B1B1;
+}
+
+.search-contact-messages__header i {
+    margin-right: 2rem;
+}
+
+.search__messages .message {
+    display: block;
+    padding: calc(var(--p1) * 2);
+    font-size: 0.8rem;
+    color: #888;
+    border-bottom: 1px solid #EAEAEA;
 }
 
 /* #endregion Contact Chat */

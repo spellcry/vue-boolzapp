@@ -41,8 +41,10 @@
                     </div>
                     <!-- Search -->
                     <div class="search">
-                        <i :class="['fa-solid', (contactsSearchStringIsVoid && !searchFocus) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
-                        <input @keyup.esc="removeFocus" @focus="toggleSearchFocus" @blur="toggleSearchFocus" ref="search__input" type="text" v-model="contactsSearchString" class="search__text" placeholder="Cerca o inizia una nuova chat">
+                        <div class="search__inner">
+                            <i :class="['fa-solid', (contactsSearchStringIsVoid && !searchFocus) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
+                            <input @keyup.esc="removeFocus" @focus="toggleSearchFocus" @blur="toggleSearchFocus" ref="search__input" type="text" v-model="contactsSearchString" class="search__text" placeholder="Cerca o inizia una nuova chat">
+                        </div>
                     </div>
                     <!-- Contacts -->
                     <div class="contacts">
@@ -64,54 +66,82 @@
                     </div>
                 </div>
                 <div class="col w-60 contact-chat">
-                    <template v-if="contactSelected !== undefined">
-                        <!-- Chat Header -->
-                        <div class="contact-chat__header">
-                            <img class="item__img" :src="'./img/avatar'+contactSelected.avatar+'.jpg'"
-                                :alt="contactSelected.name">
-                            <div class="item__info">
-                                {{ contactSelected.name }}
-                                <p class="last-online">{{ 'Ultimo accesso ' + lastOnlineTime }}</p>
+                    <div class="contact-chat-container">
+                        <template v-if="contactSelected !== undefined">
+                            <!-- Chat Header -->
+                            <div class="contact-chat__header">
+                                <img class="item__img" :src="'./img/avatar'+contactSelected.avatar+'.jpg'"
+                                    :alt="contactSelected.name">
+                                <div class="item__info">
+                                    {{ contactSelected.name }}
+                                    <p class="last-online">{{ 'Ultimo accesso ' + lastOnlineTime }}</p>
+                                </div>
+                                <div class="header__actions">
+                                    <i @click="showSearchMessages" class="fa-solid fa-magnifying-glass"></i>
+                                    <i class="fa-solid fa-paperclip"></i>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
                             </div>
-                            <div class="header__actions">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <i class="fa-solid fa-paperclip"></i>
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            <!-- Chat Messages -->
+                            <div class="contact-chat__messages">
+                                <ul class="messages">
+                                    <template v-for="message in contactSelected.messages">
+                                        <li v-if="message.visualizeDate" class="message date">
+                                            {{ showDate(message) }}
+                                        </li>                                
+                                        <li @click="toggleMessageOptions(message)" 
+                                            :class="[message.status === 'received' ? 'received' : 'sent', 'message']"
+                                        >
+                                            <p class="message__text">{{ message.message }}</p>
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                            <div :class="['message__options', message.optionVisible ? 'visible' : '']">
+                                                <p @click="toggleMessageTime(message)" class="option option__info">Message info
+                                                </p>
+                                                <p @click="deleteMessage(message)" class="option option__delete">Delete message
+                                                </p>
+                                            </div>
+                                            <div :class="['message__time', contactSelected.showMessageTime ? 'visible' : '']">
+                                                {{ showTime(message) }}
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                            <!-- Chat Write Message -->
+                            <div class="contact-chat__write-message">
+                                <i class="fa-regular fa-face-smile"></i>
+                                <input @keyup.enter="sendMessage" type="text" v-model="myMessage"
+                                    class="write-message__text" placeholder="Scrivi un messaggio">
+                                <i class="fa-solid fa-microphone"></i>
+                            </div>
+                        </template>
+                    </div>
+                    <!-- Search ContactSelected Messages -->
+                    <div :class="['search-contact-messages', showedSearchMessages ? 'visualize' : '']">
+                        <!-- Header -->
+                        <div class="search-contact-messages__header">
+                            <i @click="hideSearchMessages" class="fa-solid fa-xmark"></i>
+                            Cerca Messaggi
+                        </div>
+                        <!-- Search -->
+                        <div class="search">
+                            <div class="search__inner">
+                                <i :class="['fa-solid', (messagesSearchStringIsVoid && !searchFocusMessages) ? 'fa-magnifying-glass' : 'fa-arrow-down']"></i>
+                                <input @keyup.esc="removeFocusMessages" @focus="toggleSearchFocusMessages" @blur="toggleSearchFocusMessages" ref="search__input__messages" type="text" v-model="messagesSearchString" class="search__text" placeholder="Cerca...">
                             </div>
                         </div>
-                        <!-- Chat Messages -->
-                        <div class="contact-chat__messages">
-                            <ul class="messages">
-                                <template v-for="message in contactSelected.messages">
-                                    <li v-if="message.visualizeDate" class="message date">
-                                        {{ showDate(message) }}
-                                    </li>                                
-                                    <li @click="toggleMessageOptions(message)" 
-                                        :class="[message.status === 'received' ? 'received' : 'sent', 'message']"
-                                    >
-                                        <p class="message__text">{{ message.message }}</p>
-                                        <i class="fa-solid fa-chevron-down"></i>
-                                        <div :class="['message__options', message.optionVisible ? 'visible' : '']">
-                                            <p @click="toggleMessageTime(message)" class="option option__info">Message info
-                                            </p>
-                                            <p @click="deleteMessage(message)" class="option option__delete">Delete message
-                                            </p>
-                                        </div>
-                                        <div :class="['message__time', contactSelected.showMessageTime ? 'visible' : '']">
-                                            {{ showTime(message) }}
-                                        </div>
-                                    </li>
-                                </template>
-                            </ul>
-                        </div>
-                        <!-- Chat Write Message -->
-                        <div class="contact-chat__write-message">
-                            <i class="fa-regular fa-face-smile"></i>
-                            <input @keyup.enter="sendMessage" type="text" v-model="myMessage"
-                                class="write-message__text" placeholder="Scrivi un messaggio">
-                            <i class="fa-solid fa-microphone"></i>
-                        </div>
-                    </template>
+                        <!-- Messages -->
+                        <ul class="search__messages messages">
+                            <li v-for="message in messagesSearched" class="messages__message message">
+                                <p class="message__date">
+                                    {{ showDateTime(message) }}
+                                </p>
+                                <p class="message__text">
+                                    {{ message.message }}
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
