@@ -551,21 +551,41 @@ const app = new Vue({
                 }
             });
         },
-        toggleSearchFocus() {
-            this.searchFocus = !this.searchFocus;
+        onSearchFocus() {
+            this.searchFocus = true;
+        },
+        onSearchBlur() {
+            setTimeout(() => {
+                this.searchFocus = false;                
+            }, 150);
         },
         removeFocus() {
             this.$refs.search__input.blur();
             this.contactsSearchString = '';
         },
-        toggleSearchFocusMessages() {
-            this.searchFocusMessages = !this.searchFocusMessages;
+        onSearchFocusMessages() {
+            this.searchFocusMessages = true;
+        },
+        onSearchBlurMessages() {
+            setTimeout(() => {
+                this.searchFocusMessages = false;
+            }, 150);
         },
         setFocus() {
-            this.$refs.search__input.focus();
+            const searchInput = this.$refs.search__input;
+            if ( !this.searchFocus ) {
+                searchInput.focus();
+            } else if ( !this.contactsSearchStringIsVoid ) {
+                this.contactsSearchString = '';
+            }
         },
         setFocusMessages() {
-            this.$refs.search__input__messages.focus();
+            const searchInput = this.$refs.search__input__messages;
+            if ( !this.searchFocusMessages ) {
+                searchInput.focus();
+            } else if ( !this.messagesSearchStringIsVoid ) {
+                this.messagesSearchString = '';
+            }
         },
         removeFocusMessages() {
             this.$refs.search__input__messages.blur();
