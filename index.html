@@ -74,7 +74,7 @@
                                     :alt="contactSelected.name">
                                 <div class="item__info">
                                     {{ contactSelected.name }}
-                                    <p class="last-online">{{ 'Ultimo accesso ' + lastOnlineTime }}</p>
+                                    <p v-if="this.contactSelected.messages.length > 0" class="last-online">{{ 'Ultimo accesso ' + lastOnlineTime }}</p>
                                 </div>
                                 <div class="header__actions">
                                     <i @click="showSearchMessages" class="fa-solid fa-magnifying-glass"></i>

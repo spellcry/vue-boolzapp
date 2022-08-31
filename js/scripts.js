@@ -377,23 +377,26 @@ const app = new Vue({
             }
         },
         lastOnlineTime() {
-            let [date, time] = this.getLastMessage(this.contactSelected).date.split(' ');
-            timeArray = time.split(':');
-            dateArray = date.split('/');
-            date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
-            const diff = date.diff(dayjs(), 'day');
-            if ( diff >= -6 ) {
-                if ( diff === -1 )
-                    return `ieri alle ${this.formatTimeFromArray(timeArray)}`;
-                else if ( diff === 0 ) {
-                    return `oggi alle ${this.formatTimeFromArray(timeArray)}`;
-                } else {
-                    let day = date.format('dddd');
-                    day = this.translatedDay(day);
-                    return `${day} alle ${this.formatTimeFromArray(timeArray)}`;
+            if ( this.contactSelected.messages.length !== 0 ) {
+                let [date, time] = this.getLastMessage(this.contactSelected).date.split(' ');
+                timeArray = time.split(':');
+                dateArray = date.split('/');
+                date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
+                const diff = date.diff(dayjs(), 'day');
+                if ( diff >= -6 ) {
+                    if ( diff === -1 )
+                        return `ieri alle ${this.formatTimeFromArray(timeArray)}`;
+                    else if ( diff === 0 ) {
+                        return `oggi alle ${this.formatTimeFromArray(timeArray)}`;
+                    } else {
+                        let day = date.format('dddd');
+                        day = this.translatedDay(day);
+                        return `${day} alle ${this.formatTimeFromArray(timeArray)}`;
+                    }
                 }
+                return `il ${this.formatDateFromArray(dateArray)} alle ${this.formatTimeFromArray(timeArray)}`;
             }
-            return `il ${this.formatDateFromArray(dateArray)} alle ${this.formatTimeFromArray(timeArray)}`;
+            return '';
         },
     },
     methods: {
@@ -407,10 +410,13 @@ const app = new Vue({
             return contact.messages[contact.messages.length - 1];
         },
         cutMessageText(message) {
-            if ( message.message.length > 45 ) {
-                return message.message.substring(0, 42)+'...';
+            if ( message !== undefined ) {
+                if ( message.message.length > 45 ) {
+                    return message.message.substring(0, 42)+'...';
+                }
+                return message.message;
             }
-            return message.message;
+            return '';
         },
         selectContact(contact) {
             if ( contact !== this.contactSelected ) {
@@ -463,7 +469,7 @@ const app = new Vue({
         },
         deleteMessage(message) {
             if ( this.contactSelected.messages.includes(message) ) {
-                this.contactSelected.messages.splice(this.contactSelected.messages.indexOf(message));
+                this.contactSelected.messages.splice(this.contactSelected.messages.indexOf(message), 1);
             }
         },
         toggleMessageTime(message) {
@@ -496,22 +502,25 @@ const app = new Vue({
             return day;
         },
         showDateTime(message) {
-            let [date, time] = message.date.split(' ');
-            const timeArray = time.split(':');
-            const dateArray = date.split('/');        
-            date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
-            const diff = date.diff(dayjs(), 'day');
-            if ( diff >= -6 ) {
-                if ( diff === -1 )
-                    return `ieri`;
-                else if ( diff === 0 ) {
-                    return this.formatTimeFromArray(timeArray);
-                } else {
-                    let day = date.format('dddd');
-                    return this.translatedDay(day);
+            if ( message !== undefined) {
+                let [date, time] = message.date.split(' ');
+                const timeArray = time.split(':');
+                const dateArray = date.split('/');        
+                date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
+                const diff = date.diff(dayjs(), 'day');
+                if ( diff >= -6 ) {
+                    if ( diff === -1 )
+                        return `ieri`;
+                    else if ( diff === 0 ) {
+                        return this.formatTimeFromArray(timeArray);
+                    } else {
+                        let day = date.format('dddd');
+                        return this.translatedDay(day);
+                    }
                 }
+                return this.formatDateFromArray(dateArray);
             }
-            return this.formatDateFromArray(dateArray);
+            return '';
         },
         showDate(message) {
             let date = message.date.split(' ')[0];
