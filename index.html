@@ -90,7 +90,7 @@
                                             {{ showDate(message) }}
                                         </li>                                
                                         <li @click="toggleMessageOptions(message)" 
-                                            :id="getMessageId(message)"
+                                            :id="message.id"
                                             :class="[message.status === 'received' ? 'received' : 'sent', 'message']"
                                         >
                                             <p class="message__text">{{ message.message }}</p>
@@ -98,7 +98,7 @@
                                             <div :class="['message__options', message.optionVisible ? 'visible' : '']">
                                                 <p @click="toggleMessageTime(message)" class="option option__info">Message info
                                                 </p>
-                                                <p @click="deleteMessage(message)" class="option option__delete">Delete message
+                                                <p @click="toggleMessageOptions(message); deleteMessage(message)" class="option option__delete">Delete message
                                                 </p>
                                             </div>
                                             <div :class="['message__time', contactSelected.showMessageTime ? 'visible' : '']">
