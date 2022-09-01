@@ -346,6 +346,13 @@ const app = new Vue({
             this.contacts.sort((contact1,contact2) => {
                 const lastMessage1 = this.getLastMessage(contact1);
                 const lastMessage2 = this.getLastMessage(contact2);
+                if ( lastMessage1 === undefined && lastMessage2 === undefined ) {
+                    return 0;
+                } else if ( lastMessage1 === undefined ) {
+                    return 1;
+                } else if ( lastMessage2 === undefined ) {
+                    return -1;
+                }
                 let [date1, time1] = lastMessage1.date.split(' ');
                 timeArray1 = time1.split(':');
                 dateArray1 = date1.split('/');
@@ -375,28 +382,6 @@ const app = new Vue({
             } else {
                 return '';
             }
-        },
-        lastOnlineTime() {
-            if ( this.contactSelected.messages.length !== 0 ) {
-                let [date, time] = this.getLastMessage(this.contactSelected).date.split(' ');
-                timeArray = time.split(':');
-                dateArray = date.split('/');
-                date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
-                const diff = date.diff(dayjs(), 'day');
-                if ( diff >= -6 ) {
-                    if ( diff === -1 )
-                        return `ieri alle ${this.formatTimeFromArray(timeArray)}`;
-                    else if ( diff === 0 ) {
-                        return `oggi alle ${this.formatTimeFromArray(timeArray)}`;
-                    } else {
-                        let day = date.format('dddd');
-                        day = this.translatedDay(day);
-                        return `${day} alle ${this.formatTimeFromArray(timeArray)}`;
-                    }
-                }
-                return `il ${this.formatDateFromArray(dateArray)} alle ${this.formatTimeFromArray(timeArray)}`;
-            }
-            return '';
         },
     },
     methods: {
@@ -449,6 +434,7 @@ const app = new Vue({
                 this.lastContactSent = this.contactSelected;
                 this.dateTimeOrderedContacts;
                 this.checkMessagesDate(this.lastContactSent.messages);
+                this.setLastOnline(this.contactSelected);                
                 setTimeout(() => {
                     const now = dayjs().format('DD/MM/YYYY HH:mm:ss');
                     const message = {
@@ -461,6 +447,7 @@ const app = new Vue({
                     this.lastContactSent.messages.push(message);
                     this.dateTimeOrderedContacts;
                     this.checkMessagesDate(this.lastContactSent.messages);
+                    this.setLastOnline(this.lastContactSent);
                 }, 1000);
             }
         },
@@ -471,6 +458,7 @@ const app = new Vue({
             if ( this.contactSelected.messages.includes(message) ) {
                 this.contactSelected.messages.splice(this.contactSelected.messages.indexOf(message), 1);
             }
+            this.dateTimeOrderedContacts;
         },
         toggleMessageTime(message) {
             this.contactSelected.showMessageTime = !this.contactSelected.showMessageTime;
@@ -550,6 +538,29 @@ const app = new Vue({
             }
             return date;
         },
+        setLastOnline(contact) {
+            const lastMessage = this.getLastMessage(contact);
+            contact.lastOnline = this.formatLastOnline(lastMessage.date);
+        },
+        formatLastOnline(lastOnline) {
+            let [date, time] = lastOnline.split(' ');
+            timeArray = time.split(':');
+            dateArray = date.split('/');
+            date = dayjs(`${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`);
+            const diff = date.diff(dayjs(), 'day');
+            if ( diff >= -6 ) {
+                if ( diff === -1 )
+                    return `ieri alle ${this.formatTimeFromArray(timeArray)}`;
+                else if ( diff === 0 ) {
+                    return `oggi alle ${this.formatTimeFromArray(timeArray)}`;
+                } else {
+                    let day = date.format('dddd');
+                    day = this.translatedDay(day);
+                    return `${day} alle ${this.formatTimeFromArray(timeArray)}`;
+                }
+            }
+            return `il ${this.formatDateFromArray(dateArray)} alle ${this.formatTimeFromArray(timeArray)}`;
+        },
         checkMessagesDate(messages) {
             this.lastMessagesDate = undefined;
             messages.forEach(message => {
@@ -627,6 +638,9 @@ const app = new Vue({
         },
     },
     mounted() {
+        this.contacts.forEach(contact => {
+            this.setLastOnline(contact);
+        });
         this.dateTimeOrderedContacts;
     },
     updated() {
